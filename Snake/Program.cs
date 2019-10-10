@@ -3,46 +3,12 @@ using System.Collections.Generic;
 
 namespace Snake
 {
-    class Snake
+    class Program
     {
-
-        private int xPos;
-        private int yPos;
-        private List<(int, int)> body;
-
-        //static void Main(string[] args)
-        //{
-        public Snake()
+        static void Main()
         {
-            body = new List<(int, int)>(3);
+            Game game = new Game(80, 30);
+            game.PlayGame();
         }
-
-        public static void Eat()
-        {
-
-        }
-
-        public static void LengthenSnake()
-        {
-
-        }
-
-        public static void GetDirection()
-        {
-
-        }
-
-        // Index 1 is the snake head
-        public static void GetSnakePosition()
-        {
-
-        }
-
-        public static void Move()
-        {
-
-        }
-
-        //}
     }
 }

@@ -49,6 +49,7 @@ namespace Snake
         {
             Console.WriteLine("Hello World!");
 
+            Move();
         }
     }
 }
