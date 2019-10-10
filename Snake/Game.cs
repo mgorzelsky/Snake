@@ -11,6 +11,8 @@ namespace Snake
         private Timer timer = new Timer(500);
         private int width;
         private int height;
+        private StateOfLocation[,] gameBoard;
+        private StateOfLocation[,] collisionCheck;
         
         public Game(int width, int height)
         {
@@ -20,6 +22,9 @@ namespace Snake
         
         public void PlayGame()
         {
+            gameBoard = new StateOfLocation[width, height];
+            collisionCheck = new StateOfLocation[width, height];
+
             Console.Clear();
             Console.CursorVisible = false;
             Console.SetWindowSize(1, 1);
@@ -43,6 +48,7 @@ namespace Snake
         private void Step()
         {
             Console.WriteLine("Hello World!");
+
         }
     }
 }
