@@ -17,7 +17,7 @@ namespace Snake
         //{
         public SnakeClass()
         {
-            headPos.X  = tailPos.X= 5; // Arbitrary head & tail initial position.
+            headPos.X = tailPos.X = 5; // Arbitrary head & tail initial position.
             tailPos.X = 3;
             tailPos.Y = 5;
             Point midPos = new Point();
