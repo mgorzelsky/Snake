@@ -13,6 +13,8 @@ namespace Snake
         private int height;
         private StateOfLocation[,] gameBoard;
         private StateOfLocation[,] collisionCheck;
+        private Snake snake;
+        //private Food food;
         
         public Game(int width, int height)
         {
@@ -24,6 +26,8 @@ namespace Snake
         {
             gameBoard = new StateOfLocation[width, height];
             collisionCheck = new StateOfLocation[width, height];
+            snake = new Snake();
+            food = new Food();
 
             Console.Clear();
             Console.CursorVisible = false;

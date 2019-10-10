@@ -10,8 +10,6 @@ namespace Snake
         private int yPos;
         private List<(int, int)> body;
 
-        //static void Main(string[] args)
-        //{
         public Snake()
         {
             body = new List<(int, int)>(3);
@@ -42,7 +40,5 @@ namespace Snake
         {
 
         }
-
-        //}
     }
 }
