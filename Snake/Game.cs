@@ -9,7 +9,7 @@ namespace Snake
     public enum StateOfLocation { Empty, Food, Snake }
     class Game
     {
-        private readonly Timer timer = new Timer(250);
+        private readonly Timer timer = new Timer(150);
         private readonly int width;
         private readonly int height;
         private bool gameRunning = true;
@@ -116,7 +116,7 @@ namespace Snake
 
             //Does the snake run into a wall?
             //floor/ceiling
-            if (snakeHeadPosition.Y <= 0 || snakeHeadPosition.Y >= height)
+            if (snakeHeadPosition.Y <= 0 || snakeHeadPosition.Y >= height + 1)
                 return true;
             //walls
             if (snakeHeadPosition.X <= 0 || snakeHeadPosition.X >= width)

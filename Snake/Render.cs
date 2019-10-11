@@ -44,6 +44,7 @@ namespace Snake
 }
 */
 
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -52,17 +53,15 @@ namespace Snake
 {
     class Render
     {
-        //  variables
-
         //  methods
         public void DrawScreen(StateOfLocation[,] gameBoard)
         {
-            for (int i = 0; i < gameBoard.GetLength(0); i++)
+            for (int y = 0; y < gameBoard.GetLength(1); y++)
             {
-                for (int j = 0; j < gameBoard.GetLength(1); j++)
+                for (int x = 0; x < gameBoard.GetLength(0); x++)
                 {
-                    Console.SetCursorPosition(i, j);        // this method requires you send the columns first (x values), then rows
-                    switch (gameBoard[i, j])
+                    Console.SetCursorPosition(x, y);        // this method requires you send the columns first (x values), then rows
+                    switch (gameBoard[x, y])
                     {
                         case StateOfLocation.Empty:
                             Console.Write("-");
@@ -81,7 +80,5 @@ namespace Snake
                 Console.WriteLine();
             }
         }
-        //  constructors
-
     }
 }
