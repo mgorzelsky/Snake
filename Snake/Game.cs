@@ -73,7 +73,7 @@ namespace Snake
 
             Snake.Move();
             newSnakePosition = Snake.GetSnakePosition();
-            newFoodPosition = food.FoodPosition();
+            newFoodPosition = food.FoodPosition;
             gameBoard[newFoodPosition.X, newFoodPosition.Y] = StateOfLocation.Food;
 
             if (!CheckCollision())
@@ -106,7 +106,7 @@ namespace Snake
         private bool CheckCollision()
         {
             Point snakeHeadPosition = newSnakePosition[0];
-            StateOfLocation snakeHeadAsEnum = StateOfLocation.Snake;
+            //StateOfLocation snakeHeadAsEnum = StateOfLocation.Snake;
             //Does the snake run into itself?
             //game over
             //return true;
