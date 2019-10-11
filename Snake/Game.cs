@@ -31,7 +31,7 @@ namespace Snake
         //
         public void PlayGame()
         {
-            gameBoard = new StateOfLocation[width, height];
+            gameBoard = new StateOfLocation[height, width];
             //collisionCheck = new StateOfLocation[width, height];      //changed logic, don't need anymore
             snake = new SnakeClass();
             food = new Food(60, 15);
