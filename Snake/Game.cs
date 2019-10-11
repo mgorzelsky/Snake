@@ -9,7 +9,7 @@ namespace Snake
     public enum StateOfLocation { Empty, Food, Snake }
     class Game
     {
-        private readonly Timer timer = new Timer(500);
+        private readonly Timer timer = new Timer(150);
         private readonly int width;
         private readonly int height;
         private bool gameRunning = true;
@@ -31,7 +31,6 @@ namespace Snake
         //
         public void PlayGame()
         {
-            gameBoard = new StateOfLocation[height, width];
             //collisionCheck = new StateOfLocation[width, height];      //changed logic, don't need anymore
             snake = new SnakeClass();
             food = new Food(60, 15);
@@ -76,6 +75,7 @@ namespace Snake
 
         private void Step()
         {
+            gameBoard = new StateOfLocation[width, height];
             //Console.WriteLine("Hello World!");
 
             snake.MoveSnake();
@@ -88,7 +88,7 @@ namespace Snake
                 //int snakeLength = newSnakePosition.Count;
                 foreach (Point segment in newSnakePosition)
                 {
-                    gameBoard[segment.Y, segment.X] = StateOfLocation.Snake;
+                    gameBoard[segment.X, segment.Y] = StateOfLocation.Snake;
                 }
 
                 //for (int y = 0; y < height; y++)
@@ -105,18 +105,27 @@ namespace Snake
                 gameRunning = false;
             }
 
-            screen.DrawScreen(gameBoard);
+            screen.DrawScreen(gameBoard/*, height, width*/);
         }
 
         private bool CheckCollision()
         {
             Point snakeHeadPosition = newSnakePosition[0];
             //StateOfLocation snakeHeadAsEnum = StateOfLocation.Snake;      //Old logic, not needed
+
+            //Does the snake run into a wall?
+            //floor/ceiling
+            if (snakeHeadPosition.Y <= 0 || snakeHeadPosition.Y >= height + 1)
+                return true;
+            //walls
+            if (snakeHeadPosition.X <= 0 || snakeHeadPosition.X >= width)
+                return true;
+
             //Does the snake run into itself?
             if (gameBoard[snakeHeadPosition.X, snakeHeadPosition.Y] == StateOfLocation.Snake)
                 return true;
 
-            //Does the snake run into a wall?
+            /*
             for (int x = 0; x < width; x++)
             {
                 Point[,] wall = new Point[x, 0];
@@ -141,17 +150,18 @@ namespace Snake
                 if (wall.Equals(gameBoard[snakeHeadPosition.X, snakeHeadPosition.Y]))
                     return true;
             }
+            */
 
             //Does the snake run into food?
             if (gameBoard[snakeHeadPosition.X, snakeHeadPosition.Y] == StateOfLocation.Food)
             {
                 snake.Eat();
                 food.ChangeFoodPosition(width, height);
-                return true;
+                return false;
             }
 
             //Does the snake go into empty space?
-            return true;
+            return false;
         }
     }
 }
