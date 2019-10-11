@@ -11,26 +11,23 @@ namespace Snake
             List<string> direc = new List<string>() { "Down", "Right", "Up", "Left" };
             SnakeClass tBody = new SnakeClass();
 
-            foreach (string word in direc)
+            for (int k = 0; k < tBody.GetSnakePosition().Count; k++)
             {
-                tBody.ChangeDirection(word);
+                Console.WriteLine(tBody.GetSnakePosition()[k] + " ");
 
-                for (int k = 0; k < 3; k++)
+            }
+            for (int n = 0; n < 5; n++)
+            {
+
+                tBody.Eat();
+                for (int k = 0; k < tBody.GetSnakePosition().Count; k++)
                 {
+                    Console.WriteLine(tBody.GetSnakePosition().Count);
                     Console.WriteLine(tBody.GetSnakePosition()[k]);
 
                 }
-                for (int n = 0; n < 3; n++)
-                {
-
-                    tBody.MoveSnake();
-                    for (int k = 0; k < 3; k++)
-                    {
-                        Console.WriteLine(tBody.GetSnakePosition()[k]);
-
-                    }
-                }
             }
+
 
 
         }

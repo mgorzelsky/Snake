@@ -45,7 +45,7 @@ namespace Snake
         }
 
         // Returns string "right", "up", "left", or "down" indicating the direction of head travel
-        public static string GetDirection()
+        public string GetDirection()
         {
             return (Enum.GetName(typeof(Direction), currentDirection));
         }
@@ -58,7 +58,6 @@ namespace Snake
             else if (vector == Enum.GetName(typeof(Direction), 2)) { currentDirection = (int)Direction.Up; }
             else if (vector == Enum.GetName(typeof(Direction), 3)) { currentDirection = (int)Direction.Left; }
             else if (vector == Enum.GetName(typeof(Direction), 4)) { currentDirection = (int)Direction.Down; }
-
         }
 
         // This method returns a List of Points containing snake body coordinates. **Index 0 is the snake head.**
@@ -97,16 +96,14 @@ namespace Snake
                         headPos.Y += 1; // Down is in the +Y direction on the console axis.
                         break;
                     }
-
             }
+
             Point oldPosition1 = body[0];
             body[0] = headPos;
             //Console.WriteLine("headPos: " + headPos + "  body[0]: " + body[0]); // Test line.
 
-
             for (int index = 1; index < body.Count; index++) // **
             {
-                
                 Point oldPosition2 = body[index];
                 body[index] = oldPosition1;
                 oldPosition1 = oldPosition2;
