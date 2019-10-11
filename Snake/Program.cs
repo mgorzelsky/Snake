@@ -7,8 +7,18 @@ namespace Snake
     {
         static void Main()
         {
-            Game game = new Game(80, 30);
-            game.PlayGame();
+            bool playAgain = true;
+            while (playAgain)
+            {
+                Game game = new Game(80, 30);
+                game.PlayGame();
+
+
+                ConsoleKey playAgainChoice = Console.ReadKey().Key;
+                if (playAgainChoice != ConsoleKey.Y)
+                    playAgain = false;
+            }
         }
     }
 }
+         
