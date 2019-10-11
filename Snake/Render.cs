@@ -61,7 +61,7 @@ namespace Snake
             {
                 for (int j = 0; j < gameBoard.GetLength(1); j++)
                 {
-                    Console.SetCursorPosition(j, i);        // this method requires you send the columns first (x values), then rows
+                    Console.SetCursorPosition(i, j);        // this method requires you send the columns first (x values), then rows
                     switch (gameBoard[i, j])
                     {
                         case StateOfLocation.Empty:
