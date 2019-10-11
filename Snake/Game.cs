@@ -18,6 +18,7 @@ namespace Snake
         private Snake snake;
         private Food food;
         private List<Point> newSnakePosition;
+        private Point newFoodPosition;
 
 
         public Game(int width, int height)
@@ -62,6 +63,9 @@ namespace Snake
 
             Snake.Move();
             newSnakePosition = Snake.GetSnakePosition();
+            newFoodPosition = food.FoodPosition;
+            gameBoard[newFoodPosition.X, newFoodPosition.Y] = StateOfLocation.Food;
+
             if (!CheckCollision())
             {
                 //int snakeLength = newSnakePosition.Count;
