@@ -73,7 +73,7 @@ namespace Snake
 
             Snake.Move();
             newSnakePosition = Snake.GetSnakePosition();
-            newFoodPosition = food.FoodPosition;
+            newFoodPosition = food.FoodPosition();
             gameBoard[newFoodPosition.X, newFoodPosition.Y] = StateOfLocation.Food;
 
             if (!CheckCollision())
