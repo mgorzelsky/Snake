@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;       // for Point object
 
-namespace SnakeClass
+namespace Snake
 {
     class Food
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SnakeClass
+namespace Snake
 {
     class Render
     {

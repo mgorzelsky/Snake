@@ -4,7 +4,7 @@ using System.Text;
 using System.Timers;
 using System.Drawing;
 
-namespace SnakeClass
+namespace Snake
 {
     public enum StateOfLocation { Empty, Food, Snake }
     class Game
@@ -51,16 +51,16 @@ namespace SnakeClass
                 switch (snakeDirection)
                 {
                     case ConsoleKey.UpArrow:
-                        global::SnakeClass.ChangeDirection("Up");
+                        snake.ChangeDirection("Up");
                         break;
                     case ConsoleKey.LeftArrow:
-                        global::SnakeClass.ChangeDirection("Left");
+                        snake.ChangeDirection("Left");
                         break;
                     case ConsoleKey.DownArrow:
-                        global::SnakeClass.ChangeDirection("Down");
+                        snake.ChangeDirection("Down");
                         break;
                     case ConsoleKey.RightArrow:
-                        global::SnakeClass.ChangeDirection("Right");
+                        snake.ChangeDirection("Right");
                         break;
                 }
             }
@@ -78,8 +78,8 @@ namespace SnakeClass
         {
             //Console.WriteLine("Hello World!");
 
-            SnakeClass.Move();
-            newSnakePosition = SnakeClass.GetSnakePosition();
+            snake.MoveSnake();
+            newSnakePosition = snake.GetSnakePosition();
             newFoodPosition = food.FoodPosition;
             gameBoard[newFoodPosition.X, newFoodPosition.Y] = StateOfLocation.Food;
 

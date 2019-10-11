@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace SnakeClass
+namespace Snake
 {
     enum Direction { Right = 1, Up = 2, Left = 3, Down = 4 };
 
