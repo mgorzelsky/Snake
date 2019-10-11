@@ -146,7 +146,8 @@ namespace Snake
             //return false;
             if (gameBoard[snakeHeadPosition.X, snakeHeadPosition.Y] == StateOfLocation.Food)
             {
-                food.Eat();
+                snake.Eat();
+                food.ChangeFoodPosition(width, height);
                 return true;
             }
 
