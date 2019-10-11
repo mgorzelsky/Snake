@@ -55,7 +55,22 @@ namespace Snake
 
             while (gameRunning)
             {
-                Console.ReadKey(true);
+                ConsoleKey snakeDirection = Console.ReadKey(true).Key;
+                switch (snakeDirection)
+                {
+                    case ConsoleKey.UpArrow:
+                        Snake.ChangeDirection("Up");
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        Snake.ChangeDirection("Left");
+                        break;
+                    case ConsoleKey.DownArrow:
+                        Snake.ChangeDirection("Down");
+                        break;
+                    case ConsoleKey.RightArrow:
+                        Snake.ChangeDirection("Right");
+                        break;
+                }
             }
 
             Console.SetCursorPosition(10, 5);
