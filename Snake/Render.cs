@@ -19,7 +19,7 @@ namespace Snake
                         currentCharacter = '-';
                     if (y > 0 && y < height - 1)
                     {
-                        switch (gameState[y, x])
+                        switch (gameState[x, y])
                         {
                             case (StateOfLocation.Empty):
                                 currentCharacter = Convert.ToChar(32);

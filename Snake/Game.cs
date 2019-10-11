@@ -76,7 +76,7 @@ namespace Snake
 
         private void Step()
         {
-            gameBoard = new StateOfLocation[height, width];
+            gameBoard = new StateOfLocation[width, height];
             //Console.WriteLine("Hello World!");
 
             snake.MoveSnake();
@@ -89,7 +89,7 @@ namespace Snake
                 //int snakeLength = newSnakePosition.Count;
                 foreach (Point segment in newSnakePosition)
                 {
-                    gameBoard[segment.Y, segment.X] = StateOfLocation.Snake;
+                    gameBoard[segment.X, segment.Y] = StateOfLocation.Snake;
                 }
 
                 //for (int y = 0; y < height; y++)
