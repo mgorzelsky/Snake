@@ -14,7 +14,7 @@ namespace Snake
         private StateOfLocation[,] gameBoard;
         private StateOfLocation[,] collisionCheck;
         private Snake snake;
-        //private Food food;
+        private Food food;
         
         public Game(int width, int height)
         {
@@ -27,7 +27,7 @@ namespace Snake
             gameBoard = new StateOfLocation[width, height];
             collisionCheck = new StateOfLocation[width, height];
             snake = new Snake();
-            food = new Food();
+            food = new Food(60, 15);
 
             Console.Clear();
             Console.CursorVisible = false;
@@ -53,7 +53,32 @@ namespace Snake
         {
             Console.WriteLine("Hello World!");
 
-            Move();
+            Snake.Move();
+            //update snake position in collisionCheck[,];
+            
+            CheckCollision();
+            
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                   gameBoard[y, x]  = collisionCheck[y, x];
+                }
+            }
+
+            Render.DrawScreen(gameBoard);
+        }
+
+        private void CheckCollision()
+        {
+            //Does the snake run into itself?
+                //game over
+            //Does the snake run into a wall?
+                //game over
+            //Does the snake run into food?
+                //Food.Eat()
+            //Does the snake go into empty space?
+                //cool, no collision
         }
     }
 }
