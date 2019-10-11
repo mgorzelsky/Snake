@@ -26,6 +26,16 @@ namespace Snake
             this.width = width;
             this.height = height;
         }
+
+        public int GetWidth()
+        {
+            return width;
+        }
+
+        public int GetHeight()
+        {
+            return height;
+        }
         
         public void PlayGame()
         {
@@ -89,7 +99,8 @@ namespace Snake
             }
 
 
-            Render.DrawScreen(gameBoard);
+            Render screen = new Render();
+            screen.DrawScreen(gameBoard);
         }
 
         private bool CheckCollision()
