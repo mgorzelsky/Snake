@@ -4,7 +4,7 @@ using System.Text;
 using System.Timers;
 using System.Drawing;
 
-namespace Snake
+namespace SnakeClass
 {
     public enum StateOfLocation { Empty, Food, Snake }
     class Game
@@ -15,7 +15,7 @@ namespace Snake
         private bool gameRunning = true;
         private StateOfLocation[,] gameBoard;
         private StateOfLocation[,] collisionCheck;
-        private Snake snake;
+        private SnakeClass snake;
         private Food food;
         private List<Point> newSnakePosition;
         private Point newFoodPosition;
@@ -33,7 +33,7 @@ namespace Snake
         {
             gameBoard = new StateOfLocation[width, height];
             //collisionCheck = new StateOfLocation[width, height];      //changed logic, don't need anymore
-            snake = new Snake();
+            snake = new SnakeClass();
             food = new Food(60, 15);
 
             Console.Clear();
@@ -51,16 +51,16 @@ namespace Snake
                 switch (snakeDirection)
                 {
                     case ConsoleKey.UpArrow:
-                        Snake.ChangeDirection("Up");
+                        global::SnakeClass.ChangeDirection("Up");
                         break;
                     case ConsoleKey.LeftArrow:
-                        Snake.ChangeDirection("Left");
+                        global::SnakeClass.ChangeDirection("Left");
                         break;
                     case ConsoleKey.DownArrow:
-                        Snake.ChangeDirection("Down");
+                        global::SnakeClass.ChangeDirection("Down");
                         break;
                     case ConsoleKey.RightArrow:
-                        Snake.ChangeDirection("Right");
+                        global::SnakeClass.ChangeDirection("Right");
                         break;
                 }
             }
@@ -78,8 +78,8 @@ namespace Snake
         {
             //Console.WriteLine("Hello World!");
 
-            Snake.Move();
-            newSnakePosition = Snake.GetSnakePosition();
+            SnakeClass.Move();
+            newSnakePosition = SnakeClass.GetSnakePosition();
             newFoodPosition = food.FoodPosition;
             gameBoard[newFoodPosition.X, newFoodPosition.Y] = StateOfLocation.Food;
 
