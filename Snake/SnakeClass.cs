@@ -72,9 +72,8 @@ namespace Snake
         // all parts of the snake have advanced. 
         private void Move()
         {
-            //Point oldPosition1 = body[0];
-            Console.WriteLine("headPos: " + headPos + "  body[0]: " + body[0]);
-            Console.WriteLine(Enum.GetName(typeof(Direction), currentDirection)); //Test line
+            //Console.WriteLine("headPos: " + headPos + "  body[0]: " + body[0]); //Test line
+            //Console.WriteLine(Enum.GetName(typeof(Direction), currentDirection)); //Test line
 
             switch (Enum.GetName(typeof(Direction), currentDirection))
             {
@@ -102,7 +101,7 @@ namespace Snake
             }
             Point oldPosition1 = body[0];
             body[0] = headPos;
-            Console.WriteLine("headPos: " + headPos + "  body[0]: " + body[0]);
+            //Console.WriteLine("headPos: " + headPos + "  body[0]: " + body[0]); // Test line.
 
 
             for (int index = 1; index < body.Count; index++) // **
