@@ -13,6 +13,7 @@ namespace Snake
         private static Point headPos;
         private static Point tailPos;
         private static int currentDirection = direction.right;
+        private static bool elongate = false;
 
         public SnakeClass()
         {
@@ -30,9 +31,11 @@ namespace Snake
 
         }
 
+        // LengthenSnake calls Move(), which will add one new segment to snake on tail at end of Move, before returning elongate to false.
         public static void LengthenSnake()
         {
-
+            elongate = true;
+            Move();
         }
 
         // Returns string "right", "up", "left", or "down" indicating the direction of head travel
@@ -95,6 +98,13 @@ namespace Snake
                 Point oldPosition2 = body[index];
                 body[index] = oldPosition1;
                 oldPosition1 = oldPosition2;
+            }
+            if(elongate)
+            {
+                Point newTail = new Point();
+                newTail = oldPosition1;
+                body.Add(newTail);
+                elongate = false;
             }
         }
     }
