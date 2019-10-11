@@ -14,7 +14,7 @@ namespace Snake
         private readonly int height;
         private bool gameRunning = true;
         private StateOfLocation[,] gameBoard;
-        private StateOfLocation[,] collisionCheck;
+        //private StateOfLocation[,] collisionCheck;        //old logic, not needed
         private SnakeClass snake;
         private Food food;
         private List<Point> newSnakePosition;
