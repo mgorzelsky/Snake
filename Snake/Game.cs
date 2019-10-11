@@ -40,10 +40,13 @@ namespace Snake
             timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             timer.Enabled = true;
 
-            while (true)
+            while (gameRunning)
             {
                 Console.ReadKey();
             }
+
+            Console.SetCursorPosition(10, 5);
+            Console.WriteLine("Game Over!");
         }
 
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
@@ -53,26 +56,25 @@ namespace Snake
 
         private void Step()
         {
-            Console.WriteLine("Hello World!");
+            //Console.WriteLine("Hello World!");
 
             Snake.Move();
-            if (CheckCollision())
+            if (!CheckCollision())
             {
                 List<Point> newSnakePosition = Snake.GetSnakePosition();
-                int snakeLength = newSnakePosition.Count;
+                //int snakeLength = newSnakePosition.Count;
                 foreach (Point segment in newSnakePosition)
                 {
-                    collisionCheck[segment.Y, segment.X] = StateOfLocation.Snake;
+                    gameBoard[segment.Y, segment.X] = StateOfLocation.Snake;
                 }
-                //update snake position in collisionCheck[,];
 
-                for (int y = 0; y < height; y++)
-                {
-                    for (int x = 0; x < width; x++)
-                    {
-                        gameBoard[y, x] = collisionCheck[y, x];
-                    }
-                }
+                //for (int y = 0; y < height; y++)
+                //{
+                //    for (int x = 0; x < width; x++)
+                //    {
+                //        gameBoard[y, x] = collisionCheck[y, x];
+                //    }
+                //}
             }
             else
             {
@@ -88,16 +90,16 @@ namespace Snake
         {
             //Does the snake run into itself?
                 //game over
-                //return false;
+                //return true;
             //Does the snake run into a wall?
                 //game over
-                //return false;
+                //return true;
             //Does the snake run into food?
                 //Food.Eat()
-                //return true;
+                //return false;
             //Does the snake go into empty space?
                 //cool, no collision
-                //return true;
+                //return false;
         }
     }
 }
