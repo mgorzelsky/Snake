@@ -45,7 +45,7 @@ namespace Snake
 
             while (gameRunning)
             {
-                Console.ReadKey();
+                Console.ReadKey(true);
             }
 
             Console.SetCursorPosition(10, 5);

@@ -14,7 +14,7 @@ namespace Snake
                 game.PlayGame();
 
 
-                ConsoleKey playAgainChoice = Console.ReadKey().Key;
+                ConsoleKey playAgainChoice = Console.ReadKey(true).Key;
                 if (playAgainChoice != ConsoleKey.Y)
                     playAgain = false;
             }
