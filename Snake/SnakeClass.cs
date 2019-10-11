@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace Snake
 {
-    enum direction { right = 1, up = 2, left = 3, down = 4 };
+    enum Direction { Right = 1, Up = 2, Left = 3, Down = 4 };
 
     class SnakeClass
     {
@@ -12,12 +12,13 @@ namespace Snake
         private static List<Point> body;
         private static Point headPos;
         private static Point tailPos;
-        private static int currentDirection = direction.right;
+        private static int currentDirection = (int)Direction.Down;
         private static bool elongate = false;
 
         public SnakeClass()
         {
-            headPos.X = tailPos.X = 5; // Arbitrary head & tail initial position.
+            headPos.Y = 5;
+            headPos.X = 5; // Arbitrary head & tail initial position.
             tailPos.X = 3;
             tailPos.Y = 5;
             Point midPos = new Point();
@@ -26,37 +27,42 @@ namespace Snake
             body = new List<Point>() { headPos, midPos, tailPos };
         }
 
-        public static void Eat()
+        public void Eat()
         {
-
+            this.LengthenSnake();
         }
 
         // LengthenSnake calls Move(), which will add one new segment to snake on tail at end of Move, before returning elongate to false.
-        public static void LengthenSnake()
+        private void LengthenSnake()
         {
             elongate = true;
-            Move();
+            this.Move();
+        }
+
+        public void MoveSnake()
+        {
+            this.Move();
         }
 
         // Returns string "right", "up", "left", or "down" indicating the direction of head travel
         public static string GetDirection()
         {
-            return (Enum.GetName(currentDirection));
+            return (Enum.GetName(typeof(Direction), currentDirection));
         }
 
         // ChangeDirection takes the string "right", "up", "left", or "down" indicating the new direction of the snake. The string input is related to an int
         // per the enum above. 
-        public static void ChangeDirection(string vector)
+        public void ChangeDirection(string vector)
         {
-            if (vector == Enum.GetName(1)) currentDirection = direction.right;
-            else if (vector == Enum.GetName(2)) { currentDirection = direction.up; }
-            else if (vector == Enum.GetName(3)) { currentDirection = direction.left; }
-            else if (vector == Enum.GetName(4)) { currentDirection = direction.down; }
-            
+            if (vector == Enum.GetName(typeof(Direction), 1)) currentDirection = (int)Direction.Right;
+            else if (vector == Enum.GetName(typeof(Direction), 2)) { currentDirection = (int)Direction.Up; }
+            else if (vector == Enum.GetName(typeof(Direction), 3)) { currentDirection = (int)Direction.Left; }
+            else if (vector == Enum.GetName(typeof(Direction), 4)) { currentDirection = (int)Direction.Down; }
+
         }
 
         // This method returns a List of Points containing snake body coordinates. **Index 0 is the snake head.**
-        public static List<Point> GetSnakePosition()
+        public List<Point> GetSnakePosition()
         {
             return (body);
         }
@@ -64,42 +70,50 @@ namespace Snake
         // Move(): Store current headPos, get current direction & change Point coordinate of headPos accordingly. The second unit of snake will then assume 
         // the previous Point coordinate of the headPos, the third unit of snake will then assume the previous position of the second unit, and so on, until
         // all parts of the snake have advanced. 
-        public static void Move()
+        private void Move()
         {
-            Point oldPosition1 = headPos;
+            //Point oldPosition1 = body[0];
+            Console.WriteLine("headPos: " + headPos + "  body[0]: " + body[0]);
+            Console.WriteLine(Enum.GetName(typeof(Direction), currentDirection)); //Test line
 
-            switch ((direction)currentDirection)
+            switch (Enum.GetName(typeof(Direction), currentDirection))
             {
-                case ("right"):
+                case ("Right"):
                     {
                         headPos.X += 1;
                         break;
                     }
-                case ("up"):
+                case ("Up"):
                     {
                         headPos.Y -= 1; // Up is in the -Y direction on the console axis.
                         break;
                     }
-                case ("left"):
+                case ("Left"):
                     {
                         headPos.X -= 1;
                         break;
                     }
-                case ("down"):
+                case ("Down"):
                     {
                         headPos.Y += 1; // Down is in the +Y direction on the console axis.
                         break;
                     }
 
             }
+            Point oldPosition1 = body[0];
+            body[0] = headPos;
+            Console.WriteLine("headPos: " + headPos + "  body[0]: " + body[0]);
 
-            for(int index = 1; index < body.Count; index++)
+
+            for (int index = 1; index < body.Count; index++) // **
             {
+                
                 Point oldPosition2 = body[index];
                 body[index] = oldPosition1;
                 oldPosition1 = oldPosition2;
             }
-            if(elongate)
+
+            if (elongate)
             {
                 Point newTail = new Point();
                 newTail = oldPosition1;
@@ -108,4 +122,5 @@ namespace Snake
             }
         }
     }
+
 }
