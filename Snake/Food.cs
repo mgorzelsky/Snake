@@ -22,12 +22,12 @@ namespace Snake
             foodPosition.Y = y;
         }
 
-        // changes the position of the food on the screen randomly
-        public void ChangeFoodPosition()
+        // changes the position of the food on the screen randomly based on the size of the screen size sent in the width & height variables
+        public void ChangeFoodPosition(int width, int height)
         {
             Random rand = new Random();
-            int newX = rand.Next(1, 80);            // range 1 - 79
-            int newY = rand.Next(1, 30);            // range 1 - 29
+            int newX = rand.Next(1, width);            
+            int newY = rand.Next(1, height);            
             SetFoodPosition(newX, newY);
         }
 
