@@ -9,7 +9,7 @@ namespace Snake
     public enum StateOfLocation { Empty, Food, Snake }
     class Game
     {
-        private readonly Timer timer = new Timer(500);
+        private readonly Timer timer = new Timer(250);
         private readonly int width;
         private readonly int height;
         private bool gameRunning = true;
@@ -31,7 +31,7 @@ namespace Snake
         //
         public void PlayGame()
         {
-            gameBoard = new StateOfLocation[width, height];
+
             //collisionCheck = new StateOfLocation[width, height];      //changed logic, don't need anymore
             snake = new SnakeClass();
             food = new Food(60, 15);
@@ -76,6 +76,7 @@ namespace Snake
 
         private void Step()
         {
+            gameBoard = new StateOfLocation[height, width];
             //Console.WriteLine("Hello World!");
 
             snake.MoveSnake();
@@ -112,6 +113,7 @@ namespace Snake
         {
             Point snakeHeadPosition = newSnakePosition[0];
             //StateOfLocation snakeHeadAsEnum = StateOfLocation.Snake;      //Old logic, not needed
+            
             //Does the snake run into itself?
             if (gameBoard[snakeHeadPosition.X, snakeHeadPosition.Y] == StateOfLocation.Snake)
                 return true;
