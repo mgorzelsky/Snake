@@ -105,7 +105,7 @@ namespace Snake
                 gameRunning = false;
             }
 
-            screen.DrawScreen(gameBoard);
+            screen.DrawScreen(gameBoard, height, width);
         }
 
         private bool CheckCollision()
