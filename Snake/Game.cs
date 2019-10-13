@@ -128,10 +128,10 @@ namespace Snake
             newFoodPosition = food.FoodPosition;
             gameBoard[newFoodPosition.X, newFoodPosition.Y] = StateOfLocation.Food;
 
-            foreach (Point segment in newSnakePosition)
-            {
-                Console.WriteLine(segment);
-            }
+            //foreach (Point segment in newSnakePosition)
+            //{
+            //    Console.WriteLine(segment);
+            //}
             //Console.ReadKey();
 
             if (!CheckCollision())
@@ -147,7 +147,7 @@ namespace Snake
                 timer.Stop();
                 gameRunning = false;
             }
-            Console.ReadKey();
+            //Console.ReadKey();
 
             screen.DrawScreen(gameBoard, height, width);
         }
@@ -158,10 +158,10 @@ namespace Snake
 
             //Does the snake run out of the game area?
             //floor/ceiling
-            if (snakeHeadPosition.Y < 0 || snakeHeadPosition.Y > height + 1)
+            if (snakeHeadPosition.Y < 0 || snakeHeadPosition.Y > height - 1)
                 return true;
             //walls
-            if (snakeHeadPosition.X < 0 || snakeHeadPosition.X > width)
+            if (snakeHeadPosition.X < 0 || snakeHeadPosition.X > width - 1)
                 return true;
 
             //Does the snake run into itself?

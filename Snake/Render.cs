@@ -14,26 +14,23 @@ namespace Snake
             {
                 for (int x = 0; x < width; x++)
                 {
-                    if (y > 0 && y < height - 1)
+                    switch (gameState[x, y])
                     {
-                        switch (gameState[x, y])
-                        {
-                            case (StateOfLocation.Empty):
-                                currentCharacter = /*Convert.ToChar(32)*/'-';
-                                break;
-                            case (StateOfLocation.Food):
-                                currentCharacter = '*';
-                                break;
-                            case (StateOfLocation.Snake):
-                                currentCharacter = '#';
-                                break;
-                        }
+                        case (StateOfLocation.Empty):
+                            currentCharacter = /*Convert.ToChar(32)*/'-';
+                            break;
+                        case (StateOfLocation.Food):
+                            currentCharacter = '*';
+                            break;
+                        case (StateOfLocation.Snake):
+                            currentCharacter = '#';
+                            break;
                     }
                     screenAsString.Append(new char[] { currentCharacter });
                 }
             }
             Console.SetCursorPosition(0, 0);
-            Console.WriteLine(screenAsString);
+            Console.Write(screenAsString);
         }
     }
 }
