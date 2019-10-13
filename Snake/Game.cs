@@ -14,7 +14,6 @@ namespace Snake
         private readonly int height;
         private bool gameRunning = true;
         private StateOfLocation[,] gameBoard;
-        //private StateOfLocation[,] collisionCheck;        //old logic, not needed
         private SnakeClass snake;
         private Food food;
         private List<Point> newSnakePosition;
@@ -28,10 +27,9 @@ namespace Snake
             this.height = height;
         }
         
-        //
+        //Main game loop
         public void PlayGame()
         {
-            //collisionCheck = new StateOfLocation[width, height];      //changed logic, don't need anymore
             snake = new SnakeClass();
             food = new Food(60, 15);
 
@@ -44,24 +42,48 @@ namespace Snake
             timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             timer.Enabled = true;
 
+            //Waiting for player input while the rest of the state runs on a timer
             while (gameRunning)
             {
                 ConsoleKey snakeDirection = Console.ReadKey(true).Key;
-                switch (snakeDirection)
+
+                if (ConvertToString(snakeDirection) == ReverseDirection(snake.GetDirection()))
                 {
-                    case ConsoleKey.UpArrow:
-                        snake.ChangeDirection("Up");
-                        break;
-                    case ConsoleKey.LeftArrow:
-                        snake.ChangeDirection("Left");
-                        break;
-                    case ConsoleKey.DownArrow:
-                        snake.ChangeDirection("Down");
-                        break;
-                    case ConsoleKey.RightArrow:
-                        snake.ChangeDirection("Right");
-                        break;
                 }
+                else if (snakeDirection == ConsoleKey.UpArrow)
+                {
+                    snake.ChangeDirection("Up");
+                }
+                else if (snakeDirection == ConsoleKey.LeftArrow)
+                {
+                    snake.ChangeDirection("Left");
+                }
+                else if (snakeDirection == ConsoleKey.DownArrow)
+                {
+                    snake.ChangeDirection("Down");
+                }
+                else if (snakeDirection == ConsoleKey.RightArrow)
+                {
+                    snake.ChangeDirection("Right");
+                }
+                else;
+                    // Nothing
+
+                //switch (snakeDirection)
+                //{
+                //    case ConsoleKey.UpArrow:
+                //        snake.ChangeDirection("Up");
+                //            break;
+                //    case ConsoleKey.LeftArrow:
+                //        snake.ChangeDirection("Left");
+                //        break;
+                //    case ConsoleKey.DownArrow:
+                //        snake.ChangeDirection("Down");
+                //        break;
+                //    case ConsoleKey.RightArrow:
+                //        snake.ChangeDirection("Right");
+                //        break;
+                //}
             }
 
             Console.SetCursorPosition(10, 5);
@@ -73,31 +95,23 @@ namespace Snake
             Step();
         }
 
+        //Controls the pace of the game. Every time this is called the snake advances one space and collision checks are made
         private void Step()
         {
+            StateOfLocation[,] oldGameBoard = gameBoard;
             gameBoard = new StateOfLocation[width, height];
-            //Console.WriteLine("Hello World!");
 
             snake.MoveSnake();
             newSnakePosition = snake.GetSnakePosition();
             newFoodPosition = food.FoodPosition;
             gameBoard[newFoodPosition.X, newFoodPosition.Y] = StateOfLocation.Food;
 
-            if (!CheckCollision())
+            if (!CheckCollision(oldGameBoard))
             {
-                //int snakeLength = newSnakePosition.Count;
                 foreach (Point segment in newSnakePosition)
                 {
                     gameBoard[segment.X, segment.Y] = StateOfLocation.Snake;
                 }
-
-                //for (int y = 0; y < height; y++)
-                //{
-                //    for (int x = 0; x < width; x++)
-                //    {
-                //        gameBoard[y, x] = collisionCheck[y, x];
-                //    }
-                //}
             }
             else
             {
@@ -108,52 +122,24 @@ namespace Snake
             screen.DrawScreen(gameBoard/*, height, width*/);
         }
 
-        private bool CheckCollision()
+        private bool CheckCollision(StateOfLocation[,] oldGameBoard)
         {
             Point snakeHeadPosition = newSnakePosition[0];
-            //StateOfLocation snakeHeadAsEnum = StateOfLocation.Snake;      //Old logic, not needed
 
-            //Does the snake run into a wall?
+            //Does the snake run out of the game area?
             //floor/ceiling
-            if (snakeHeadPosition.Y <= 0 || snakeHeadPosition.Y >= height + 1)
+            if (snakeHeadPosition.Y < 0 || snakeHeadPosition.Y > height - 1)
                 return true;
             //walls
-            if (snakeHeadPosition.X <= 0 || snakeHeadPosition.X >= width)
+            if (snakeHeadPosition.X < 0 || snakeHeadPosition.X > width - 1)
                 return true;
 
             //Does the snake run into itself?
-            if (gameBoard[snakeHeadPosition.X, snakeHeadPosition.Y] == StateOfLocation.Snake)
+            if (oldGameBoard[snakeHeadPosition.X, snakeHeadPosition.Y] == StateOfLocation.Snake)
                 return true;
 
-            /*
-            for (int x = 0; x < width; x++)
-            {
-                Point[,] wall = new Point[x, 0];
-                if (wall.Equals(gameBoard[snakeHeadPosition.X, snakeHeadPosition.Y]))
-                    return true;
-            }
-            for (int x = 0; x < width; x++)
-            {
-                Point[,] wall = new Point[x, height - 1];
-                if (wall.Equals(gameBoard[snakeHeadPosition.X, snakeHeadPosition.Y]))
-                    return true;
-            }
-            for (int y = 0; y < height; y++)
-            {
-                Point[,] wall = new Point[y, 0];
-                if (wall.Equals(gameBoard[snakeHeadPosition.X, snakeHeadPosition.Y]))
-                    return true;
-            }
-            for (int y = 0; y < height; y++)
-            {
-                Point[,] wall = new Point[y, width - 1];
-                if (wall.Equals(gameBoard[snakeHeadPosition.X, snakeHeadPosition.Y]))
-                    return true;
-            }
-            */
-
             //Does the snake run into food?
-            if (gameBoard[snakeHeadPosition.X, snakeHeadPosition.Y] == StateOfLocation.Food)
+            if (oldGameBoard[snakeHeadPosition.X, snakeHeadPosition.Y] == StateOfLocation.Food)
             {
                 snake.Eat();
                 food.ChangeFoodPosition(width, height);
@@ -162,6 +148,40 @@ namespace Snake
 
             //Does the snake go into empty space?
             return false;
+        }
+
+        //Converts ConsoleKey to string for comparison to the snake direction
+        private string ConvertToString(ConsoleKey variableAsString)
+        {
+            switch (variableAsString)
+            {
+                case ConsoleKey.UpArrow:
+                    return "Up";
+                case ConsoleKey.LeftArrow:
+                    return "Left";
+                case ConsoleKey.DownArrow:
+                    return "Down";
+                case ConsoleKey.RightArrow:
+                    return "Right";
+            }
+            return "not a vaild choice";
+        }
+
+        //Takes in the snake direction and returns the reverse value for comparison.
+        private string ReverseDirection(string snakeCurrentDirection)
+        {
+            switch (snakeCurrentDirection)
+            {
+                case "Up":
+                    return "Down";
+                case "Down":
+                    return "Up";
+                case "Left":
+                    return "Right";
+                case "Right":
+                    return "Left";
+            }
+            return "not a valid choice";
         }
     }
 }
