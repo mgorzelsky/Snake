@@ -1,4 +1,4 @@
-﻿/*
+﻿
 using System;
 using System.Text;
 
@@ -14,10 +14,10 @@ namespace Snake
             {
                 for (int x = 0; x < width; x++)
                 {
-                    if (y == 0)
-                        currentCharacter = '-';
-                    if (y == 39)
-                        currentCharacter = '-';
+                    //if (y == 0)
+                    //    currentCharacter = '-';
+                    //if (y == 39)
+                    //    currentCharacter = '-';
                     if (y > 0 && y < height - 1)
                     {
                         switch (gameState[x, y])
@@ -42,9 +42,9 @@ namespace Snake
         }
     }
 }
-*/
 
 
+/*
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -82,3 +82,4 @@ namespace Snake
         }
     }
 }
+*/

@@ -47,21 +47,44 @@ namespace Snake
             while (gameRunning)
             {
                 ConsoleKey snakeDirection = Console.ReadKey(true).Key;
-                switch (snakeDirection)
+
+                if (ConvertToString(snakeDirection) == ReverseDirection(snake.GetDirection()))
                 {
-                    case ConsoleKey.UpArrow:
-                        snake.ChangeDirection("Up");
-                        break;
-                    case ConsoleKey.LeftArrow:
-                        snake.ChangeDirection("Left");
-                        break;
-                    case ConsoleKey.DownArrow:
-                        snake.ChangeDirection("Down");
-                        break;
-                    case ConsoleKey.RightArrow:
-                        snake.ChangeDirection("Right");
-                        break;
                 }
+                else if (snakeDirection == ConsoleKey.UpArrow)
+                {
+                    snake.ChangeDirection("Up");
+                }
+                else if (snakeDirection == ConsoleKey.LeftArrow)
+                {
+                    snake.ChangeDirection("Left");
+                }
+                else if (snakeDirection == ConsoleKey.DownArrow)
+                {
+                    snake.ChangeDirection("Down");
+                }
+                else if (snakeDirection == ConsoleKey.RightArrow)
+                {
+                    snake.ChangeDirection("Right");
+                }
+                else;
+                    //Empty on purpose
+
+                //switch (snakeDirection)
+                //{
+                //    case ConsoleKey.UpArrow:
+                //        snake.ChangeDirection("Up");
+                //            break;
+                //    case ConsoleKey.LeftArrow:
+                //        snake.ChangeDirection("Left");
+                //        break;
+                //    case ConsoleKey.DownArrow:
+                //        snake.ChangeDirection("Down");
+                //        break;
+                //    case ConsoleKey.RightArrow:
+                //        snake.ChangeDirection("Right");
+                //        break;
+                //}
             }
 
             Console.SetCursorPosition(10, 5);
@@ -105,7 +128,7 @@ namespace Snake
                 gameRunning = false;
             }
 
-            screen.DrawScreen(gameBoard/*, height, width*/);
+            screen.DrawScreen(gameBoard, height, width);
         }
 
         private bool CheckCollision()
@@ -115,10 +138,10 @@ namespace Snake
 
             //Does the snake run into a wall?
             //floor/ceiling
-            if (snakeHeadPosition.Y <= 0 || snakeHeadPosition.Y >= height + 1)
+            if (snakeHeadPosition.Y < 0 || snakeHeadPosition.Y > height + 1)
                 return true;
             //walls
-            if (snakeHeadPosition.X <= 0 || snakeHeadPosition.X >= width)
+            if (snakeHeadPosition.X < 0 || snakeHeadPosition.X > width)
                 return true;
 
             //Does the snake run into itself?
@@ -162,6 +185,38 @@ namespace Snake
 
             //Does the snake go into empty space?
             return false;
+        }
+
+        private string ConvertToString(ConsoleKey variableAsString)
+        {
+            switch (variableAsString)
+            {
+                case ConsoleKey.UpArrow:
+                    return "Up";
+                case ConsoleKey.LeftArrow:
+                    return "Left";
+                case ConsoleKey.DownArrow:
+                    return "Down";
+                case ConsoleKey.RightArrow:
+                    return "Right";
+            }
+            return "not a vaild choice";
+        }
+
+        private string ReverseDirection(string snakeCurrentDirection)
+        {
+            switch (snakeCurrentDirection)
+            {
+                case "Up":
+                    return "Down";
+                case "Down":
+                    return "Up";
+                case "Left":
+                    return "Right";
+                case "Right":
+                    return "Left";
+            }
+            return "not a valid choice";
         }
     }
 }
