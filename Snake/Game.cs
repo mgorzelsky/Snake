@@ -9,16 +9,17 @@ namespace Snake
     public enum StateOfLocation { Empty, Food, Snake }
     class Game
     {
-        private readonly Timer timer = new Timer(150);
+        private readonly Timer timer = new Timer();
+        private readonly Render screen = new Render();
         private readonly int width;
         private readonly int height;
         private bool gameRunning = true;
         private StateOfLocation[,] gameBoard;
-        private SnakeClass snake;
-        private Food food;
-        private List<Point> newSnakePosition;
-        private Point newFoodPosition;
-        Render screen = new Render();
+        private SnakeClass snake = new SnakeClass();
+        private Food food = new Food(60, 15);
+        private int score = 0;
+        private int tickSpeed; //Necessary to ensure that the game doesn't get too fast
+        private bool hasEaten = false;
 
         //Constructor to pass in screen size, allows game to be re-sized with the change of a single variable
         public Game(int width, int height)
@@ -26,12 +27,12 @@ namespace Snake
             this.width = width;
             this.height = height;
         }
-        
+
         //Main game loop
-        public void PlayGame()
+        public int PlayGame()
         {
-            snake = new SnakeClass();
-            food = new Food(60, 15);
+            tickSpeed = 200;
+            timer.Interval = 200;
 
             Console.Clear();
             Console.CursorVisible = false;
@@ -40,7 +41,7 @@ namespace Snake
             Console.SetWindowSize(width, height);
 
             timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            timer.Enabled = true;
+            timer.Start();
 
             //Waiting for player input while the rest of the state runs on a timer
             while (gameRunning)
@@ -68,31 +69,21 @@ namespace Snake
                 }
                 else;
                     // Nothing
-
-                //switch (snakeDirection)
-                //{
-                //    case ConsoleKey.UpArrow:
-                //        snake.ChangeDirection("Up");
-                //            break;
-                //    case ConsoleKey.LeftArrow:
-                //        snake.ChangeDirection("Left");
-                //        break;
-                //    case ConsoleKey.DownArrow:
-                //        snake.ChangeDirection("Down");
-                //        break;
-                //    case ConsoleKey.RightArrow:
-                //        snake.ChangeDirection("Right");
-                //        break;
-                //}
             }
 
-            Console.SetCursorPosition(10, 5);
-            Console.WriteLine("Game Over!");
+            return score;
         }
 
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
             Step();
+
+            if (tickSpeed > 100 && score % 10 == 0 && hasEaten)
+            {
+                timer.Interval -= 10;
+                tickSpeed -= 10;
+                hasEaten = false;
+            }
         }
 
         //Controls the pace of the game. Every time this is called the snake advances one space and collision checks are made
@@ -102,11 +93,11 @@ namespace Snake
             gameBoard = new StateOfLocation[width, height];
 
             snake.MoveSnake();
-            newSnakePosition = snake.GetSnakePosition();
-            newFoodPosition = food.FoodPosition;
+            List<Point> newSnakePosition = snake.GetSnakePosition();
+            Point newFoodPosition = food.FoodPosition;
             gameBoard[newFoodPosition.X, newFoodPosition.Y] = StateOfLocation.Food;
 
-            if (!CheckCollision(oldGameBoard))
+            if (!CheckCollision(oldGameBoard, newSnakePosition))
             {
                 foreach (Point segment in newSnakePosition)
                 {
@@ -117,21 +108,21 @@ namespace Snake
             {
                 timer.Stop();
                 gameRunning = false;
+                return;
             }
 
-            screen.DrawScreen(gameBoard/*, height, width*/);
+            screen.DrawScreen(gameBoard, height, width);
         }
 
-        private bool CheckCollision(StateOfLocation[,] oldGameBoard)
+        private bool CheckCollision(StateOfLocation[,] oldGameBoard, List<Point> newSnakePosition)
         {
             Point snakeHeadPosition = newSnakePosition[0];
 
             //Does the snake run out of the game area?
-            //floor/ceiling
-            if (snakeHeadPosition.Y < 0 || snakeHeadPosition.Y > height - 1)
-                return true;
-            //walls
-            if (snakeHeadPosition.X < 0 || snakeHeadPosition.X > width - 1)
+            if (snakeHeadPosition.Y < 0 || 
+                snakeHeadPosition.Y > height - 1 || 
+                snakeHeadPosition.X < 0 || 
+                snakeHeadPosition.X > width - 1)
                 return true;
 
             //Does the snake run into itself?
@@ -142,6 +133,8 @@ namespace Snake
             if (oldGameBoard[snakeHeadPosition.X, snakeHeadPosition.Y] == StateOfLocation.Food)
             {
                 snake.Eat();
+                score++;
+                hasEaten = true;
                 food.ChangeFoodPosition(width, height);
                 return false;
             }
