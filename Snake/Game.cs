@@ -39,6 +39,29 @@ namespace Snake
             Console.SetBufferSize(width, height);
             Console.SetWindowSize(width, height);
 
+            /* //Testing of snake coordinates
+            gameBoard = new StateOfLocation[width, height];
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    gameBoard[x, y] = StateOfLocation.Snake;
+                }
+            }
+            Console.WriteLine(gameBoard.GetLength(0));
+            Console.WriteLine(gameBoard.GetLength(1));
+            Console.ReadKey();
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    Console.Write(gameBoard[x, y]);
+                }
+            }
+            Console.ReadKey();
+            */
+
             timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             timer.Enabled = true;
 
@@ -67,7 +90,7 @@ namespace Snake
                     snake.ChangeDirection("Right");
                 }
                 else;
-                    //Empty on purpose
+                    // Nothing
 
                 //switch (snakeDirection)
                 //{
@@ -105,11 +128,18 @@ namespace Snake
             newFoodPosition = food.FoodPosition;
             gameBoard[newFoodPosition.X, newFoodPosition.Y] = StateOfLocation.Food;
 
+            foreach (Point segment in newSnakePosition)
+            {
+                Console.WriteLine(segment);
+            }
+            //Console.ReadKey();
+
             if (!CheckCollision())
             {
                 foreach (Point segment in newSnakePosition)
                 {
                     gameBoard[segment.X, segment.Y] = StateOfLocation.Snake;
+                    //Console.WriteLine(gameBoard[segment.X, segment.Y]);       //Check to ensure the coords are being overwritten
                 }
             }
             else
@@ -117,6 +147,7 @@ namespace Snake
                 timer.Stop();
                 gameRunning = false;
             }
+            Console.ReadKey();
 
             screen.DrawScreen(gameBoard, height, width);
         }
