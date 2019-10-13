@@ -39,29 +39,6 @@ namespace Snake
             Console.SetBufferSize(width, height);
             Console.SetWindowSize(width, height);
 
-            /* //Testing of snake coordinates
-            gameBoard = new StateOfLocation[width, height];
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    gameBoard[x, y] = StateOfLocation.Snake;
-                }
-            }
-            Console.WriteLine(gameBoard.GetLength(0));
-            Console.WriteLine(gameBoard.GetLength(1));
-            Console.ReadKey();
-
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    Console.Write(gameBoard[x, y]);
-                }
-            }
-            Console.ReadKey();
-            */
-
             timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             timer.Enabled = true;
 
@@ -121,6 +98,7 @@ namespace Snake
         //Controls the pace of the game. Every time this is called the snake advances one space and collision checks are made
         private void Step()
         {
+            StateOfLocation[,] oldGameBoard = gameBoard;
             gameBoard = new StateOfLocation[width, height];
 
             snake.MoveSnake();
@@ -128,18 +106,11 @@ namespace Snake
             newFoodPosition = food.FoodPosition;
             gameBoard[newFoodPosition.X, newFoodPosition.Y] = StateOfLocation.Food;
 
-            //foreach (Point segment in newSnakePosition)
-            //{
-            //    Console.WriteLine(segment);
-            //}
-            //Console.ReadKey();
-
-            if (!CheckCollision())
+            if (!CheckCollision(oldGameBoard))
             {
                 foreach (Point segment in newSnakePosition)
                 {
                     gameBoard[segment.X, segment.Y] = StateOfLocation.Snake;
-                    //Console.WriteLine(gameBoard[segment.X, segment.Y]);       //Check to ensure the coords are being overwritten
                 }
             }
             else
@@ -147,12 +118,11 @@ namespace Snake
                 timer.Stop();
                 gameRunning = false;
             }
-            //Console.ReadKey();
 
-            screen.DrawScreen(gameBoard, height, width);
+            screen.DrawScreen(gameBoard/*, height, width*/);
         }
 
-        private bool CheckCollision()
+        private bool CheckCollision(StateOfLocation[,] oldGameBoard)
         {
             Point snakeHeadPosition = newSnakePosition[0];
 
@@ -165,11 +135,11 @@ namespace Snake
                 return true;
 
             //Does the snake run into itself?
-            if (gameBoard[snakeHeadPosition.X, snakeHeadPosition.Y] == StateOfLocation.Snake)
+            if (oldGameBoard[snakeHeadPosition.X, snakeHeadPosition.Y] == StateOfLocation.Snake)
                 return true;
 
             //Does the snake run into food?
-            if (gameBoard[snakeHeadPosition.X, snakeHeadPosition.Y] == StateOfLocation.Food)
+            if (oldGameBoard[snakeHeadPosition.X, snakeHeadPosition.Y] == StateOfLocation.Food)
             {
                 snake.Eat();
                 food.ChangeFoodPosition(width, height);

@@ -1,4 +1,4 @@
-﻿
+﻿/*
 using System;
 using System.Text;
 
@@ -17,7 +17,7 @@ namespace Snake
                     switch (gameState[x, y])
                     {
                         case (StateOfLocation.Empty):
-                            currentCharacter = /*Convert.ToChar(32)*/'-';
+                            currentCharacter = Convert.ToChar(32);
                             break;
                         case (StateOfLocation.Food):
                             currentCharacter = '*';
@@ -34,9 +34,9 @@ namespace Snake
         }
     }
 }
+*/
 
 
-/*
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -74,4 +74,3 @@ namespace Snake
         }
     }
 }
-*/
