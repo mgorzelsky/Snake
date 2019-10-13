@@ -14,7 +14,6 @@ namespace Snake
         private readonly int height;
         private bool gameRunning = true;
         private StateOfLocation[,] gameBoard;
-        //private StateOfLocation[,] collisionCheck;        //old logic, not needed
         private SnakeClass snake;
         private Food food;
         private List<Point> newSnakePosition;
@@ -28,10 +27,9 @@ namespace Snake
             this.height = height;
         }
         
-        //
+        //Main game loop
         public void PlayGame()
         {
-            //collisionCheck = new StateOfLocation[width, height];      //changed logic, don't need anymore
             snake = new SnakeClass();
             food = new Food(60, 15);
 
@@ -44,6 +42,7 @@ namespace Snake
             timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             timer.Enabled = true;
 
+            //Waiting for player input while the rest of the state runs on a timer
             while (gameRunning)
             {
                 ConsoleKey snakeDirection = Console.ReadKey(true).Key;
@@ -96,10 +95,10 @@ namespace Snake
             Step();
         }
 
+        //Controls the pace of the game. Every time this is called the snake advances one space and collision checks are made
         private void Step()
         {
             gameBoard = new StateOfLocation[width, height];
-            //Console.WriteLine("Hello World!");
 
             snake.MoveSnake();
             newSnakePosition = snake.GetSnakePosition();
@@ -108,19 +107,10 @@ namespace Snake
 
             if (!CheckCollision())
             {
-                //int snakeLength = newSnakePosition.Count;
                 foreach (Point segment in newSnakePosition)
                 {
                     gameBoard[segment.X, segment.Y] = StateOfLocation.Snake;
                 }
-
-                //for (int y = 0; y < height; y++)
-                //{
-                //    for (int x = 0; x < width; x++)
-                //    {
-                //        gameBoard[y, x] = collisionCheck[y, x];
-                //    }
-                //}
             }
             else
             {
@@ -134,9 +124,8 @@ namespace Snake
         private bool CheckCollision()
         {
             Point snakeHeadPosition = newSnakePosition[0];
-            //StateOfLocation snakeHeadAsEnum = StateOfLocation.Snake;      //Old logic, not needed
 
-            //Does the snake run into a wall?
+            //Does the snake run out of the game area?
             //floor/ceiling
             if (snakeHeadPosition.Y < 0 || snakeHeadPosition.Y > height + 1)
                 return true;
@@ -147,33 +136,6 @@ namespace Snake
             //Does the snake run into itself?
             if (gameBoard[snakeHeadPosition.X, snakeHeadPosition.Y] == StateOfLocation.Snake)
                 return true;
-
-            /*
-            for (int x = 0; x < width; x++)
-            {
-                Point[,] wall = new Point[x, 0];
-                if (wall.Equals(gameBoard[snakeHeadPosition.X, snakeHeadPosition.Y]))
-                    return true;
-            }
-            for (int x = 0; x < width; x++)
-            {
-                Point[,] wall = new Point[x, height - 1];
-                if (wall.Equals(gameBoard[snakeHeadPosition.X, snakeHeadPosition.Y]))
-                    return true;
-            }
-            for (int y = 0; y < height; y++)
-            {
-                Point[,] wall = new Point[y, 0];
-                if (wall.Equals(gameBoard[snakeHeadPosition.X, snakeHeadPosition.Y]))
-                    return true;
-            }
-            for (int y = 0; y < height; y++)
-            {
-                Point[,] wall = new Point[y, width - 1];
-                if (wall.Equals(gameBoard[snakeHeadPosition.X, snakeHeadPosition.Y]))
-                    return true;
-            }
-            */
 
             //Does the snake run into food?
             if (gameBoard[snakeHeadPosition.X, snakeHeadPosition.Y] == StateOfLocation.Food)
@@ -187,6 +149,7 @@ namespace Snake
             return false;
         }
 
+        //Converts ConsoleKey to string for comparison to the snake direction
         private string ConvertToString(ConsoleKey variableAsString)
         {
             switch (variableAsString)
@@ -203,6 +166,7 @@ namespace Snake
             return "not a vaild choice";
         }
 
+        //Takes in the snake direction and returns the reverse value for comparison.
         private string ReverseDirection(string snakeCurrentDirection)
         {
             switch (snakeCurrentDirection)

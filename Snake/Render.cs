@@ -14,16 +14,12 @@ namespace Snake
             {
                 for (int x = 0; x < width; x++)
                 {
-                    //if (y == 0)
-                    //    currentCharacter = '-';
-                    //if (y == 39)
-                    //    currentCharacter = '-';
                     if (y > 0 && y < height - 1)
                     {
                         switch (gameState[x, y])
                         {
                             case (StateOfLocation.Empty):
-                                currentCharacter = Convert.ToChar(32);
+                                currentCharacter = /*Convert.ToChar(32)*/'-';
                                 break;
                             case (StateOfLocation.Food):
                                 currentCharacter = '*';
@@ -34,7 +30,6 @@ namespace Snake
                         }
                     }
                     screenAsString.Append(new char[] { currentCharacter });
-                    //Console.Write(gameState[y, x]);
                 }
             }
             Console.SetCursorPosition(0, 0);
