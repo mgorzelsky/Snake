@@ -5,6 +5,8 @@ namespace Snake
 {
     class Program
     {
+        //Provides a starting point for the game itself. Will be used later for menu options such as difficulty,
+        //high scores, and restarting after loss.
         static void Main()
         {
             bool playAgain = true;
