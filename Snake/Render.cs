@@ -25,10 +25,10 @@ namespace Snake
                             screenBuffer.Append(" ");
                             break;
                         case StateOfLocation.Snake:
-                            screenBuffer.Append("S");
+                            screenBuffer.Append("#");
                             break;
                         case StateOfLocation.Food:
-                            screenBuffer.Append("F");
+                            screenBuffer.Append("*");
                             break;
                         default:
                             break;
