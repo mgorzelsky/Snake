@@ -111,7 +111,7 @@ namespace Snake
                 return;
             }
 
-            screen.DrawScreen(gameBoard, height, width);
+            screen.DrawScreen(gameBoard);
         }
 
         private bool CheckCollision(StateOfLocation[,] oldGameBoard, List<Point> newSnakePosition)
