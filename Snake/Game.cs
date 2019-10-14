@@ -26,6 +26,7 @@ namespace Snake
         {
             this.width = width;
             this.height = height;
+            gameBoard = new StateOfLocation[width, height];
         }
 
         //Main game loop
@@ -48,27 +49,26 @@ namespace Snake
             {
                 ConsoleKey snakeDirection = Console.ReadKey(true).Key;
 
-                if (ConvertToString(snakeDirection) == ReverseDirection(snake.GetDirection()))
-                {
-                }
-                else if (snakeDirection == ConsoleKey.UpArrow)
+                if (snakeDirection == ConsoleKey.UpArrow && 
+                    ConvertToString(snakeDirection) != ReverseDirection(snake.GetDirection()))
                 {
                     snake.ChangeDirection("Up");
                 }
-                else if (snakeDirection == ConsoleKey.LeftArrow)
+                if (snakeDirection == ConsoleKey.LeftArrow &&
+                    ConvertToString(snakeDirection) != ReverseDirection(snake.GetDirection()))
                 {
                     snake.ChangeDirection("Left");
                 }
-                else if (snakeDirection == ConsoleKey.DownArrow)
+                if (snakeDirection == ConsoleKey.DownArrow && 
+                    ConvertToString(snakeDirection) != ReverseDirection(snake.GetDirection()))
                 {
                     snake.ChangeDirection("Down");
                 }
-                else if (snakeDirection == ConsoleKey.RightArrow)
+                if (snakeDirection == ConsoleKey.RightArrow && 
+                    ConvertToString(snakeDirection) != ReverseDirection(snake.GetDirection()))
                 {
                     snake.ChangeDirection("Right");
                 }
-                else;
-                    // Nothing
             }
 
             return score;
