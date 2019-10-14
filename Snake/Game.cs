@@ -85,7 +85,8 @@ namespace Snake
             }
         }
 
-        //Controls the pace of the game. Every time this is called the snake advances one space and collision checks are made
+        //Controls the pace of the game. Every time this is called the snake advances one space and 
+        //collision checks are made
         private void Step()
         {
             StateOfLocation[,] oldGameBoard = gameBoard;
@@ -134,7 +135,7 @@ namespace Snake
                 snake.Eat();
                 score++;
                 hasEaten = true;
-                food.ChangeFoodPosition(width, height);
+                food.ChangeFoodPosition(width, height, gameBoard);
                 return false;
             }
 
