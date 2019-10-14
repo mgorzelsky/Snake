@@ -16,7 +16,7 @@ namespace Snake
         private bool gameRunning = true;
         private StateOfLocation[,] gameBoard;
         private SnakeClass snake = new SnakeClass();
-        private Food food = new Food(60, 15);
+        private Food food = new Food(2, 2);
         private int score = 0;
         private int tickSpeed; //Necessary to ensure that the game doesn't get too fast
         private bool hasEaten = false;
@@ -64,8 +64,7 @@ namespace Snake
                 {
                     snake.ChangeDirection("Down");
                 }
-                if (snakeDirection == ConsoleKey.RightArrow && 
-                    ConvertToString(snakeDirection) != ReverseDirection(snake.GetDirection()))
+                if (snakeDirection == ConsoleKey.RightArrow && ConvertToString(snakeDirection) != ReverseDirection(snake.GetDirection()))
                 {
                     snake.ChangeDirection("Right");
                 }

@@ -14,6 +14,7 @@ namespace Snake
         private static Point tailPos;
         private static int currentDirection = (int)Direction.Down;
         private static bool elongate = false;
+        private Point oldPosition1;
 
         public SnakeClass()
         {
@@ -36,7 +37,15 @@ namespace Snake
         private void LengthenSnake()
         {
             elongate = true;
-            this.Move();
+            //this.Move();
+
+            if (elongate)
+            {
+                Point newTail = new Point();
+                newTail = oldPosition1;
+                body.Add(newTail);
+                elongate = false;
+            }
         }
 
         public void MoveSnake()
@@ -98,7 +107,7 @@ namespace Snake
                     }
             }
 
-            Point oldPosition1 = body[0];
+            /*Point*/ oldPosition1 = body[0];
             body[0] = headPos;
             //Console.WriteLine("headPos: " + headPos + "  body[0]: " + body[0]); // Test line.
 
@@ -109,14 +118,13 @@ namespace Snake
                 oldPosition1 = oldPosition2;
             }
 
-            if (elongate)
-            {
-                Point newTail = new Point();
-                newTail = oldPosition1;
-                body.Add(newTail);
-                elongate = false;
-            }
+            //if (elongate)
+            //{
+            //    Point newTail = new Point();
+            //    newTail = oldPosition1;
+            //    body.Add(newTail);
+            //    elongate = false;
+            //}
         }
     }
-
 }

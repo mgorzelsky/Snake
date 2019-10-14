@@ -12,7 +12,7 @@ namespace Snake
             bool playAgain = true;
             while (playAgain)
             {
-                Game game = new Game(80, 30);
+                Game game = new Game(40, 15);
                 int score = game.PlayGame();
 
                 Console.SetCursorPosition(10, 5);
